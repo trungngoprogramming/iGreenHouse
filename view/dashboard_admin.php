@@ -1,11 +1,7 @@
 <?php
-session_start();
-//tiến hành kiểm tra là người dùng đã đăng nhập hay chưa
-//nếu chưa, chuyển hướng người dùng ra lại trang đăng nhập
-if (!isset($_SESSION['username'])) {
-	header('Location: ../view/login.php');
-}
+include("../session/check_login_session.php");
 ?>
+
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -21,7 +17,7 @@ if (!isset($_SESSION['username'])) {
 				<li><a style="color: #3fb0ac; float: left;" href=""><strong>iGreenHouse</strong></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right top-header">
-				<li><a style="color: #95a5a6; float: right;" href="../session/logout.php" name="btn-logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+				<li><a style="color: #95a5a6; float: right;" href="../session/logout_session.php" name="btn-logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 			</ul>
 		</div>
 	</nav>
