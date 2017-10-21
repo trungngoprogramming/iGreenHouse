@@ -29,6 +29,22 @@
   height: 100%;
   background-color: #fff;
 }
+
+.sidenav div{
+  margin-top: 20px;
+  padding: 10px;
+  list-style-type: none;
+  font-family: all;
+  font-size: 16px;  
+}
+
+.sidenav div:hover{
+  background-color: #ecf0f1;
+}
+
+.sidenav div a:hover{
+  text-decoration: none;
+}
 body {
   background: #ecf0f1;
   font-family: sans-serif;
@@ -36,9 +52,11 @@ body {
 }
 form {
   background: #fff;
-  padding: 4em 4em 2em;
-  max-width: 400px;
+  padding: 4em 4em 4em;
+  max-width: 500px;
+  max-height: 570px;
   margin: 50px auto 0;
+  margin-top: 20px;
   box-shadow: 0 0 1em #222;
   border-radius: 2px;
 }
@@ -54,6 +72,11 @@ form p {
   margin: 0 0 3em 0;
   position: relative;
 }
+
+form p a{
+  float: right;
+  font-size: 12px;
+}
 form input {
   display: block;
   box-sizing: border-box;
@@ -62,7 +85,8 @@ form input {
   margin: 0;
 }
 form input[type="text"],
-form input[type="password"] {
+form input[type="password"],
+form input[type="email"] {
   background: #fff;
   border: 1px solid #dbdbdb;
   font-size: 1.6em;

@@ -57,7 +57,7 @@ if ($_POST["btn_login"]) {
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="nav navbar-nav navbar-right top-header">
-				<li><a style="color: #95a5a6; float: right;" href="/index.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+				<li><a style="color: #95a5a6; float: right;" href="/index.php"><span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a></li>
 			</div>
 		</div>
 	</nav>
@@ -75,6 +75,10 @@ if ($_POST["btn_login"]) {
 		<p>
 			<input type="submit" value="Login" id="submit" name="btn_login">
 		</p>
+		<p>
+			<a href="../view/forgot_password.php">Forgot Password</a>
+		</p>
+		
 	</form>
 
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
