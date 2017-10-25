@@ -1,10 +1,23 @@
-<!-- create action login -->
 <?php
 require_once("../connection/connection.php");
 session_start();
-if ($_POST["btn_login"]) {
-	$username = $_POST["username"];
-	$password = $_POST["password"];
+if (isset($_SESSION["username"])) {
+	{
+		if ($_SESSION['isadmin'] == 0) {
+			header('Location: ../view/dashboard_manager.php');
+		}
+		else {
+			header('Location: ../view/dashboard_admin.php');
+		}
+	}
+}
+?>
+
+<!-- create action login -->
+<?php
+if (isset($_REQUEST["btn_login"])) {
+	$username = $_REQUEST["username"];
+	$password = $_REQUEST["password"];
 
 		//làm sạch thông tin, xóa bỏ các tag html, ký tự đặc biệt 
 		//mà người dùng cố tình thêm vào để tấn công theo phương thức sql injection
@@ -27,17 +40,17 @@ if ($_POST["btn_login"]) {
 			echo '<script type="text/javascript">alert("Username or Password is wrong!")</script>';
 		}
 		else{
-			$level = "SELECT level FROM user WHERE username = '$username' AND password = '$password' AND level = 0";
+			$level = "SELECT * FROM user WHERE username = '$username' AND password = '$password' AND level = 0";
 			$query = mysqli_query($conn, $level);
 			$num_rows = mysqli_num_rows($query);
 			if ($num_rows == 1) {
 				$_SESSION['username'] = $username;
-				$isadmin = 1;
+				$_SESSION['isadmin'] = 1;
 				header('Location: /view/dashboard_admin.php');	
 			}
 			else{
 				$_SESSION['username'] = $username;
-				$isadmin = 0;
+				$_SESSION['isadmin'] = 0;
 				header('Location: /view/dashboard_manager.php');
 			}
 		}

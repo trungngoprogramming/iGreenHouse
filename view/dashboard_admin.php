@@ -1,5 +1,10 @@
 <?php
 include("../session/check_login_session.php");
+if (isset($_SESSION["username"])) {
+	if ($_SESSION['isadmin'] != 1) {
+		header('Location: /view/dashboard_manager.php');
+	}
+}
 ?>
 
 <html>

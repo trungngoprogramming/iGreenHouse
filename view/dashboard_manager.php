@@ -1,6 +1,10 @@
 <?php
 include("../session/check_login_session.php");
-include("../session/connection_arduino.php");
+if (isset($_SESSION["username"])) {
+	if ($_SESSION['isadmin'] != 0) {
+		header('Location: /view/dashboard_admin.php');
+	}
+}
 ?>
 
 <!DOCTYPE html>
