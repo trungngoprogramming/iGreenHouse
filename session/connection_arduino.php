@@ -6,7 +6,5 @@
     $temp = $_REQUEST["temp"];
     $humi = $_REQUEST["humi"];
     $sql = "INSERT INTO tempLog (temperature, humidity) VALUES ('$temp', $humi)";
-    mysqli_query($conn, $query);
-    
-    echo "$temp & $humi";
+    mysqli_query($conn, $sql);
 ?>

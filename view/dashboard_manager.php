@@ -19,6 +19,7 @@ if (isset($_SESSION["username"])) {
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/style/dashboard_manager.css">
+	<link rel="stylesheet" href="/style/toggle_button.css">
 
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
@@ -48,14 +49,23 @@ if (isset($_SESSION["username"])) {
 	<div id="monitor" class="container-fluid bg-grey">
 		<h2 class="text-center">MONITOR</h2>
 		<div class="row text-center">
-		    <div class="col-sm-6">
-		        <h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $temp ?>&#8451;</h2>
-		    </div>
-		    <div class="col-sm-6">
-		        <h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $humi ?>%</h2>
-		    </div>
+			<div class="col-sm-6">
+				<h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $temp ?>&#8451;</h2>
+				<label class="switch">
+					<input type="checkbox">
+					<span class="slider round"></span>
+				</label>
+			</div>
+			<div class="col-sm-6">
+				<h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $humi ?>%</h2>
+				<label class="switch">
+					<input type="checkbox" checked>
+					<span class="slider round"></span>
+				</label>
+			</div>
 		</div>
 	</div>	
+	
 
 	<!-- Container (Contact Section) -->
 	<div id="contact" class="container-fluid bg-grey">

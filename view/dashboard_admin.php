@@ -1,10 +1,18 @@
 <?php
+
 include("../session/check_login_session.php");
+include("../connection/connection.php");
+
 if (isset($_SESSION["username"])) {
 	if ($_SESSION['isadmin'] != 1) {
 		header('Location: /view/dashboard_manager.php');
 	}
 }
+
+
+$sql = "SELECT * FROM user";
+$query = mysqli_query($conn, $sql);
+
 ?>
 
 <html>
@@ -27,12 +35,39 @@ if (isset($_SESSION["username"])) {
 		</div>
 	</nav>
 	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 sidenav">
-			<div><a style="color: #3498db;" href="">Account</a></div>
-			<div><a style="color: #3498db;" href="">Reset Password</a></div>
+		<div><a style="color: #3498db;" href="">Account</a></div>
+		<div><a style="color: #3498db;" href="">Reset Password</a></div>
 	</div>
 
-	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-		
+	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="margin-left: 30px">
+		<table class="table table-success table-inverse	">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Username</th>
+					<th>Password</th>
+					<th>Level</th>
+					<th>Email</th>
+					<th>Setting</th>
+				</tr>
+				<div style="width: 100%; margin: 10px" class="text-right"><button class="btn btn-info" style="width: 70px; height: 40px" onclick="location.href='/view/add_member.php';">Add</button></div>
+			</thead>
+			<tbody>
+				<?php while($row = $query->fetch_array(MYSQLI_ASSOC)): ?>
+					<tr>
+						<td><?= $row['id'] ?></td>
+						<td><?= $row['username'] ?></td>
+						<td><?= $row['password'] ?></td>
+						<td><?= $row['level'] ?></td>
+						<td><?= $row['email'] ?></td>
+						<td>
+							<a class="btn btn-success" name="btn-edit" onclick="return $answer">Edit</a>
+							<a class="btn btn-danger" name="btn-delete">Delete</a>
+						</td>
+					</tr>
+				<?php endwhile; ?>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>
