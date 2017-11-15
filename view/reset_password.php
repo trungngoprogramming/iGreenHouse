@@ -1,3 +1,11 @@
+<?php 
+	include ("../session/check_login_session.php");
+	include("../connection/connection.php");
+ ?>
+
+
+
+
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -21,7 +29,7 @@
 		<h2>RESET PASSWORD</h2>
 		<p>
 			<label for="username" class="floatLabel">Username</label>
-			<input id="username" name="username" disabled="disabled" type="text">
+			<input id="username" name="username" disabled="disabled" type="text" value= <?php echo $_SESSION['username'] ?>>
 		</p>
 		<p>
 			<label for="password" class="floatLabel">Old Password</label>

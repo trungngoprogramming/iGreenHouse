@@ -2,7 +2,7 @@
 <?php
 require_once("../connection/connection.php");
 session_start();
-if ($_POST["btn_forgot"]) {
+if (isset($_POST["btn_forgot"])) {
 	$email = $_POST["email"];
 	$sql = "SELECT * FROM user WHERE email='$email'";
 	$query = mysqli_query($conn, $sql);
