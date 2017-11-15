@@ -1,0 +1,180 @@
+/*!
+ * Start Bootstrap - Grayscale v4.0.0-beta (http://startbootstrap.com/template-overviews/grayscale)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-grayscale/blob/master/LICENSE)
+ */
+ body{
+ 	font-family:Lora,'Helvetica Neue',Helvetica,Arial,sans-serif;
+ 	position:relative;
+ 	width:100%;
+ 	height:100%;
+ 	color:#fff;
+ }
+ html{width:100%;
+ 	height:100%
+ }
+
+ h1,h2,h3,h4,h5,h6{
+ 	font-weight:500;
+ 	margin:0 0 90px;
+ 	letter-spacing:6px;
+ 	text-align: center;
+ }
+
+ p{font-size:16px;line-height:1.5;margin:0 0 25px}@media (min-width:768px){p{font-size:18px;line-height:1.6;margin:0 0 35px}}a{-webkit-transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;transition:all .2s ease-in-out;color:#42dca3}a:focus,a:hover{text-decoration:none;color:#1d9b6c}#mainNav{font-family:Cabin,'Helvetica Neue',Helvetica,Arial,sans-serif;margin-bottom:0;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.3);background-color:#000}#mainNav .navbar-toggler{font-size:14px;padding:11px;color:#fff;border:1px solid #fff}
+
+ #mainNav .navbar-brand{
+ 	font-weight:700
+ }
+ #mainNav 
+ a{
+ 	color:#fff
+ }
+ #mainNav .navbar-nav .nav-item{
+ 	-webkit-transition:background .3s ease-in-out;
+ 	-moz-transition:background .3s ease-in-out;
+ 	transition:background .3s ease-in-out
+ }
+ #mainNav .navbar-nav .nav-item:hover{
+ 	color:fade(white,80%);
+ 	outline:0;
+ 	background-color:transparent
+ }
+ #mainNav .navbar-nav .nav-item:active,#mainNav .navbar-nav .nav-item:focus{
+ 	outline:0;
+ 	background-color:transparent
+ }
+ @media (min-width:992px){
+ 	#mainNav{
+ 		padding-top:20px;
+ 		padding-bottom:20px;
+ 		-webkit-transition:background .3s ease-in-out,padding-top .3s ease-in-out,padding-bottom .3s;
+ 		-moz-transition:background .3s ease-in-out,padding-top .3s ease-in-out,padding-bottom .3s;
+ 		transition:background .3s ease-in-out,padding-top .3s ease-in-out,padding-bottom .3s;
+ 		letter-spacing:1px;
+ 		border-bottom:none;
+ 		background:0 0
+ 	}
+ 	#mainNav.navbar-shrink{
+ 		padding-top:10px;
+ 		padding-bottom:10px;
+ 		border-bottom:1px solid rgba(255,255,255,.3);
+ 		background:#000
+ 	}
+ 	#mainNav .nav-link.active{
+ 		outline:0;background-color:rgba(255,255,255,.3)
+ 	}
+ 	#mainNav .nav-link.active:hover{
+ 		color:#fff
+ 	}
+ }
+ .masthead{
+ 	display:table;
+ 	width:100%;
+ 	height:auto;
+ 	padding:200px 0;
+ 	text-align:center;
+ 	color:#fff;
+ 	background:url(../imgs/intro-bg.jpg) no-repeat bottom center scroll;
+ 	background-color:#000;
+ 	-webkit-background-size:cover;
+ 	-moz-background-size:cover;
+ 	-o-background-size:cover
+ 	;background-size:cover
+ }
+ .masthead .intro-body{display:table-cell;vertical-align:middle}.masthead .intro-body .brand-heading{font-size:50px}.masthead .intro-body .intro-text{font-size:18px}@media (min-width:768px){.masthead{height:100%;padding:0}.masthead .intro-body .brand-heading{font-size:100px}.masthead .intro-body .intro-text{font-size:22px}}.btn-circle{font-size:26px;width:55px;height:55px;margin-top:15px;line-height:38px;-webkit-transition:background .3s ease-in-out;-moz-transition:background .3s ease-in-out;transition:background .3s ease-in-out;color:#fff;border:2px solid #fff;border-radius:100%!important;background:0 0}.btn-circle:focus,.btn-circle:hover{color:#fff;outline:0;background:rgba(255,255,255,.1)}
+ .content-section{
+ 	padding-top:150px;
+ 	padding-bottom:150px
+ }
+ .content-section{
+ 	padding-top:200px;
+ 	padding-bottom:200px
+ }
+ .btn{font-family:Cabin,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:400;-webkit-transition:all .3s ease-in-out;-moz-transition:all .3s ease-in-out;transition:all .3s ease-in-out;text-transform:uppercase;border-radius:0}.btn-default{color:#42dca3;border:1px solid #42dca3;background-color:transparent}.btn-default:focus,.btn-default:hover{color:#000;border:1px solid #42dca3;outline:0;background-color:#42dca3}ul.banner-social-buttons{margin-top:0}@media (max-width:1199px){ul.banner-social-buttons{margin-top:15px}}@media (max-width:767px){ul.banner-social-buttons li{display:block;margin-bottom:20px;padding:0}ul.banner-social-buttons li:last-child{margin-bottom:0}}footer{padding:50px 0}footer p{font-size:14px;margin:0}::-moz-selection{background:#fcfcfc;background:rgba(255,255,255,.2);text-shadow:none}::selection{background:#fcfcfc;background:rgba(255,255,255,.2);text-shadow:none}img::selection{background:0 0}img::-moz-selection{background:0 0}body{-webkit-tap-highlight-color:rgba(255,255,255,.2)}
+
+ form {
+ 	background: #fff;
+ 	padding: 4em 4em 2em;
+ 	max-width: 400px;
+ 	margin: 50px auto 0;
+ 	border-radius: 5px;
+ 	box-shadow: 0 0 1em #222;
+ }
+
+ form h2 {
+ 	margin: 0 0 50px 0;
+ 	padding: 10px;
+ 	text-align: center;
+ 	font-size: 20px;
+ 	color: #666666;
+ 	border-bottom: solid 1px #e5e5e5;
+ }
+ form p {
+ 	margin: 0 0 3em 0;
+ 	position: relative;
+ }
+ form input {
+ 	display: block;
+ 	box-sizing: border-box;
+ 	width: 100%;
+ 	outline: none;
+ 	margin: 0;
+ }
+ form input[type="text"],
+ form input[type="password"] {
+ 	background: #fff;
+ 	border: 1px solid #dbdbdb;
+ 	font-size: 1em;
+ 	padding: .8em .5em;
+ 	border-radius: 2px;
+ }
+ form input[type="text"]:focus,
+ form input[type="password"]:focus {
+ 	background: #fff;
+ }
+ form span {
+ 	display: block;
+ 	background: #F9A5A5;
+ 	padding: 2px 5px;
+ 	color: #666;
+ }
+ form input[type="submit"] {
+ 	background: #1abc9c;
+ 	box-shadow: 0 3px 0 0 #16a085;
+ 	border-radius: 2px;
+ 	border: none;
+ 	color: #fff;
+ 	cursor: pointer;
+ 	display: block;
+ 	font-size: 1em;
+ 	line-height: 1.6em;
+ 	margin: 2em 0 0;
+ 	outline: none;
+ 	padding: .8em 0;
+ 	text-shadow: 0 1px #68B25B;
+ }
+ form input[type="submit"]:hover {
+ 	background: #16a085;
+ 	text-shadow: 0 1px 3px rgba(70, 93, 41, 0.7);
+ }
+ form label {
+ 	position: absolute;
+ 	left: 8px;
+ 	top: 12px;
+ 	color: #999;
+ 	font-size: 16px;
+ 	display: outline-block;
+ 	padding: 4px 10px;
+ 	font-weight: 400;
+ 	background-color: rgba(255, 255, 255, 0);
+ 	-moz-transition: color 0.3s, top 0.3s, background-color 0.8s;
+ 	-o-transition: color 0.3s, top 0.3s, background-color 0.8s;
+ 	-webkit-transition: color 0.3s, top 0.3s, background-color 0.8s;
+ 	transition: color 0.3s, top 0.3s, background-color 0.8s;
+ }
+ form label.floatLabel {
+ 	top: -11px;
+ 	background-color: rgba(255, 255, 255, 0.8);
+ 	font-size: 14px;
+ }

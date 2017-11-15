@@ -1,5 +1,4 @@
 <?php
-
 include("../session/check_login_session.php");
 include("../connection/connection.php");
 
@@ -13,7 +12,9 @@ if (isset($_SESSION["username"])) {
 $sql = "SELECT * FROM user";
 $query = mysqli_query($conn, $sql);
 
+echo $_SESSION['username']
 ?>
+
 
 <html>
 <head>
@@ -55,7 +56,6 @@ $query = mysqli_query($conn, $sql);
 			<tbody>
 				<?php while($row = $query->fetch_array(MYSQLI_ASSOC)): ?>
 					<tr>
-						<td><?= $row['id'] ?></td>
 						<td><?= $row['username'] ?></td>
 						<td><?= $row['password'] ?></td>
 						<td><?= $row['level'] ?></td>
