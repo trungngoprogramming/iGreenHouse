@@ -10,7 +10,7 @@ if (isset($_SESSION["username"])) {
 }
 
 
-$sql = "SELECT * FROM user";
+$sql = "SELECT * FROM tb_account";
 $query = mysqli_query($conn, $sql);
 
 ?>
@@ -43,10 +43,9 @@ $query = mysqli_query($conn, $sql);
 		<table class="table table-success table-inverse	">
 			<thead>
 				<tr>
-					<th>Id</th>
 					<th>Username</th>
 					<th>Password</th>
-					<th>Level</th>
+					<th>Position</th>
 					<th>Email</th>
 					<th>Setting</th>
 				</tr>
@@ -55,10 +54,16 @@ $query = mysqli_query($conn, $sql);
 			<tbody>
 				<?php while($row = $query->fetch_array(MYSQLI_ASSOC)): ?>
 					<tr>
-						<td><?= $row['id'] ?></td>
 						<td><?= $row['username'] ?></td>
 						<td><?= $row['password'] ?></td>
-						<td><?= $row['level'] ?></td>
+						<td><?php 
+						if($row['level'] == 1){
+							echo 'admin';
+						}
+						else{
+							echo 'manager';
+						} 
+						?></td>
 						<td><?= $row['email'] ?></td>
 						<td>
 							<a class="btn btn-success" name="btn-edit" onclick="return $answer">Edit</a>
