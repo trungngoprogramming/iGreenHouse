@@ -86,7 +86,7 @@ if (isset($_SESSION["username"])) {
 						<input class="form-control" id="email" disabled="disabled" name="email" placeholder="Email" type="email" required>
 					</div>
 				</div>
-				<textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+				<textarea style="resize: none" class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
 				<div class="row">
 					<div class="col-sm-12 form-group">
 						<input class="btn btn-default pull-right" type="submit" name="Submit" value="Sent"></input>

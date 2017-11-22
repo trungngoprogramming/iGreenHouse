@@ -13,6 +13,14 @@ if (isset($_SESSION["username"])) {
 $sql = "SELECT * FROM tb_account";
 $query = mysqli_query($conn, $sql);
 
+if (isset($_REQUEST['get_dl'])) {
+	if () {
+		# code...
+	}
+
+}
+
+
 ?>
 
 <html>
@@ -47,6 +55,7 @@ $query = mysqli_query($conn, $sql);
 					<th>Password</th>
 					<th>Position</th>
 					<th>Email</th>
+					<th>Phone</th>
 					<th>Setting</th>
 				</tr>
 				<div style="width: 100%; margin: 10px" class="text-right"><button class="btn btn-info" style="width: 70px; height: 40px" onclick="location.href='/view/add_member.php';">Add</button></div>
@@ -55,7 +64,7 @@ $query = mysqli_query($conn, $sql);
 				<?php while($row = $query->fetch_array(MYSQLI_ASSOC)): ?>
 					<tr>
 						<td><?= $row['username'] ?></td>
-						<td><?= $row['password'] ?></td>
+						<td><?= "*************" ?></td>
 						<td><?php 
 						if($row['level'] == 1){
 							echo 'admin';
@@ -65,9 +74,10 @@ $query = mysqli_query($conn, $sql);
 						} 
 						?></td>
 						<td><?= $row['email'] ?></td>
+						<td><?= $row['phone'] ?></td>
 						<td>
-							<a class="btn btn-success" name="btn-edit" onclick="return $answer">Edit</a>
-							<a class="btn btn-danger" name="btn-delete">Delete</a>
+							<a href="" class="btn btn-success" name="btn-edit">Edit</a>
+							<?php echo "<a href='dashboard_admin.php?get_dl={$row['username']}' class='btn btn-danger' name='btn-delete'>Delete</a>" ?>
 						</td>
 					</tr>
 				<?php endwhile; ?>

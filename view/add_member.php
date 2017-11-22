@@ -10,8 +10,29 @@ if (isset($_SESSION["username"])) {
 }
 
 
-$sql = "SELECT * FROM tb_account";
-$query = mysqli_query($conn, $sql);
+if(isset($_REQUEST['submit'])){
+	$username = $_REQUEST['usr'];
+	$password = $_REQUEST['pwd'];
+	$email 	  = $_REQUEST['eml'];
+	$phone    = $_REQUEST['phn'];
+	$level    = $_REQUEST['lv'] == 'Admin' ? 1 : 0;
+
+	$numbersOnly = preg_replace("[^0-9]", "", $phone);
+	$numberOfDigits = strlen($numbersOnly);
+	if ($numberOfDigits == 10 or $numberOfDigits == 11) {
+		$sql = "INSERT INTO tb_account (username, password, email, phone, level) VALUES ('$username', '$password', '$email', '$phone', $level)";
+		$query = mysqli_query($conn, $sql);
+		if ($query == TRUE) {
+			echo '<script type="text/javascript">alert("Create new Member success!")</script>';
+		}
+
+		else{
+			echo '<script type="text/javascript">alert("Username is Exist!")</script>';
+		}
+	} else {
+		echo '<script>alert("Invalid Phone Number")</script>';
+	}
+}
 
 ?>
 
@@ -35,12 +56,37 @@ $query = mysqli_query($conn, $sql);
 		</div>
 	</nav>
 	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 sidenav">
-		<div><a style="color: #3498db;" href="">Account</a></div>
+		<div><a style="color: #3498db;" href="dashboard_admin.php">Account</a></div>
 		<div><a style="color: #3498db;" href="">Reset Password</a></div>
 	</div>
 
 	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="margin-left: 30px">
-		
+		<form method="POST">
+			<h2>Add account</h2>
+			<p class="form-group">
+				<label for="usr" class="floatLabel">Username</label>
+				<input type="text" id="usr" name="usr">
+			</p>
+			<p class="form-group">
+				<label for="pwd" class="floatLabel">Password</label>
+				<input type="password" id="pwd" name="pwd">
+			</p>
+			<p class="form-group">
+				<label for="eml" class="floatLabel">Email</label>
+				<input type="email" id="eml" name="eml">
+			</p>
+			<p class="form-group">
+				<label for="eml" class="floatLabel">Phone</label>
+				<input type="text" id="phn" name="phn">
+			</p>
+			<p class="form-group">
+				<select class="form-control" id="sel1" name="lv">
+					<option>Admin</option>
+					<option>Manager</option>
+				</select>
+			</p>
+			<p class="text-right"><button class="btn btn-info btn-lg" id="submit" name="submit">Insert</button></p>
+		</form>
 	</div>
 </body>
 </html>

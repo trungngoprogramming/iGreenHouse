@@ -1,3 +1,17 @@
+<?php
+// require_once("../connection/connection.php");
+session_start();
+if (isset($_SESSION["username"])) {
+	{
+		if ($_SESSION['isadmin'] == 0) {
+			header('Location: ../view/dashboard_manager.php');
+		}
+		else {
+			header('Location: ../view/dashboard_admin.php');
+		}
+	}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
