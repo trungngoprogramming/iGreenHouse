@@ -12,18 +12,29 @@ if (isset($_SESSION["username"])) {
 
 $sql = "SELECT * FROM tb_account";
 $query = mysqli_query($conn, $sql);
+$delete = $_REQUEST['delete'];
 
-if (isset($_REQUEST['get_dl'])) {
-	if () {
-		# code...
-	}
-
+if (isset($delete)) {
+	echo '
+	<div class="popup">
+	<h4 style="color: #e74c3c">Do you want to Delete it?</h4>
+	<div class="text-right">
+	<a href="dashboard_admin.php" class="btn btn-cancel">Cancel</a>
+	<a href="dashboard_admin.php?id='.$delete.'" class="btn btn-danger" name="ok">Ok</a>
+	</div>
+	</div>';
 }
 
+$id = $_REQUEST['id'];
+if (isset($id)) {
+	$sql = "DELETE FROM tb_account WHERE username = '$id'";
+	mysqli_query($conn, $sql);
+	header('Location: /view/dashboard_admin.php');
+}
 
+$_SESSION['username'] = "y";
 ?>
 
-<html>
 <head>
 	<meta charset="UTF-8">
 	<title>iGreenHouse</title>
@@ -44,7 +55,7 @@ if (isset($_REQUEST['get_dl'])) {
 	</nav>
 	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 sidenav">
 		<div><a style="color: #3498db;" href="">Account</a></div>
-		<div><a style="color: #3498db;" href="">Reset Password</a></div>
+		<div><a style="color: #3498db;" href="reset_password.php">Reset Password</a></div>
 	</div>
 
 	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="margin-left: 30px">
@@ -63,21 +74,17 @@ if (isset($_REQUEST['get_dl'])) {
 			<tbody>
 				<?php while($row = $query->fetch_array(MYSQLI_ASSOC)): ?>
 					<tr>
-						<td><?= $row['username'] ?></td>
+						<td><?= $id = $row['username'] ?></td>
 						<td><?= "*************" ?></td>
-						<td><?php 
-						if($row['level'] == 1){
-							echo 'admin';
-						}
-						else{
-							echo 'manager';
-						} 
-						?></td>
+						<td><?= $row['level']==1 ? 'admin' : 'manager' ?></td>
 						<td><?= $row['email'] ?></td>
 						<td><?= $row['phone'] ?></td>
 						<td>
-							<a href="" class="btn btn-success" name="btn-edit">Edit</a>
-							<?php echo "<a href='dashboard_admin.php?get_dl={$row['username']}' class='btn btn-danger' name='btn-delete'>Delete</a>" ?>
+							<?php echo '
+							<a href="/view/add_member.php?un='.$id.'&edit=y" class="btn btn-success">Edit</a>' ?>
+							<?php echo '
+							<a href="/view/dashboard_admin.php?delete='.$id.'" class="btn btn-danger">Delete</a>'; ?>
+							
 						</td>
 					</tr>
 				<?php endwhile; ?>

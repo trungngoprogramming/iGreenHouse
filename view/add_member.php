@@ -16,21 +16,36 @@ if(isset($_REQUEST['submit'])){
 	$email 	  = $_REQUEST['eml'];
 	$phone    = $_REQUEST['phn'];
 	$level    = $_REQUEST['lv'] == 'Admin' ? 1 : 0;
+	if (isset($_REQUEST['edit'])) {
+		$username = $_REQUEST['un'];
+		$numbersOnly = preg_replace("[^0-9]", "", $phone);
+		$numberOfDigits = strlen($numbersOnly);
+		if ($numberOfDigits == 10 or $numberOfDigits == 11) {
+			$sql = "UPDATE tb_account SET password='$password', email='$email', phone='$phone', level=$level WHERE username='$username'";
+			$query = mysqli_query($conn, $sql);
+			echo '<script type="text/javascript">alert("Update Member success!")</script>';
 
-	$numbersOnly = preg_replace("[^0-9]", "", $phone);
-	$numberOfDigits = strlen($numbersOnly);
-	if ($numberOfDigits == 10 or $numberOfDigits == 11) {
-		$sql = "INSERT INTO tb_account (username, password, email, phone, level) VALUES ('$username', '$password', '$email', '$phone', $level)";
-		$query = mysqli_query($conn, $sql);
-		if ($query == TRUE) {
-			echo '<script type="text/javascript">alert("Create new Member success!")</script>';
+		} 
+		else {
+			echo '<script>alert("Invalid Phone Number")</script>';
 		}
+	}
+	else{
+		$numbersOnly = preg_replace("[^0-9]", "", $phone);
+		$numberOfDigits = strlen($numbersOnly);
+		if ($numberOfDigits == 10 or $numberOfDigits == 11) {
+			$sql = "INSERT INTO tb_account (username, password, email, phone, level) VALUES ('$username', '$password', '$email', '$phone', $level);";
+			$query = mysqli_query($conn, $sql);
+			if ($query == TRUE) {
+				echo '<script type="text/javascript">alert("Create new Member success!")</script>';
+			}
 
-		else{
-			echo '<script type="text/javascript">alert("Username is Exist!")</script>';
+			else{
+				echo '<script type="text/javascript">alert("Username is Exist!")</script>';
+			}
+		} else {
+			echo '<script>alert("Invalid Phone Number")</script>';
 		}
-	} else {
-		echo '<script>alert("Invalid Phone Number")</script>';
 	}
 }
 
@@ -62,10 +77,13 @@ if(isset($_REQUEST['submit'])){
 
 	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="margin-left: 30px">
 		<form method="POST">
-			<h2>Add account</h2>
+			<h2><?= $_REQUEST['edit'] ? "Edit Account" : "Add Account"?></h2>
 			<p class="form-group">
 				<label for="usr" class="floatLabel">Username</label>
-				<input type="text" id="usr" name="usr">
+				<?= 
+				$_REQUEST['edit'] ? "<input type='text' disabled='disabled' id='usr' name='usr' placeholder={$_REQUEST['un']}>" : '<input type="text" id="usr" name="usr">'
+				?>
+				
 			</p>
 			<p class="form-group">
 				<label for="pwd" class="floatLabel">Password</label>
@@ -85,7 +103,7 @@ if(isset($_REQUEST['submit'])){
 					<option>Manager</option>
 				</select>
 			</p>
-			<p class="text-right"><button class="btn btn-info btn-lg" id="submit" name="submit">Insert</button></p>
+			<p class="text-right"><button class="btn btn-info btn-lg" id="submit" name="submit"><?= $_REQUEST['edit'] ? "Update" : "Insert" ?></button></p>
 		</form>
 	</div>
 </body>
