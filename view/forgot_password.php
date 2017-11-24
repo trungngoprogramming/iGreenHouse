@@ -8,7 +8,7 @@ if ($_POST["btn_forgot"]) {
 	$query = mysqli_query($conn, $sql);
 	$num_rows = mysqli_num_rows($query);
 	if($num_rows == 0 || $email==" "){
-		echo '<script type="text/javascript">alert("Sorry Email is Exist!")</script>';
+		echo '<script type="text/javascript">alert("Sorry, email is not exist!")</script>';
 	}
 	else{
 		$pass = rand(1000, 10000);
@@ -32,7 +32,7 @@ if ($_POST["btn_forgot"]) {
 	<title>iGreenHouse</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/style/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/style/custom.css">  
+	<link rel="stylesheet" href="/style/custom.css">
 </head>
 
 <body>

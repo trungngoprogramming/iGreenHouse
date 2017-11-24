@@ -1,7 +1,7 @@
 <?php
 
 $server_username = "root";
-$server_password = "trung123@";
+$server_password = "root";
 $server_host = "localhost";
 $database = 'igreenhousedb';
 
