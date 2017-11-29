@@ -1,4 +1,6 @@
 <?php
+include("..session/connection_arduino.php");
+include("../connection/connection.php");
 include("../session/check_login_session.php");
 if (isset($_SESSION["username"])) {
 	if ($_SESSION['isadmin'] != 0) {
@@ -6,6 +8,14 @@ if (isset($_SESSION["username"])) {
 	}
 }
 ?>
+
+<?php
+
+
+$sql = "SELECT * FROM tempLog ORDER BY IDpara DESC LIMIT 1";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +40,7 @@ if (isset($_SESSION["username"])) {
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>                        
+					<span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="#myPage">iGreenHouse</a>
 			</div>
@@ -50,22 +60,22 @@ if (isset($_SESSION["username"])) {
 		<h2 class="text-center">MONITOR</h2>
 		<div class="row text-center">
 			<div class="col-sm-6">
-				<h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $temp ?>&#8451;</h2>
+				<h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $row["temp"]; $temp ?>&#8451;</h2>
 				<label class="switch">
 					<input type="checkbox">
 					<span class="slider round"></span>
 				</label>
 			</div>
 			<div class="col-sm-6">
-				<h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $humi ?>%</h2>
+				<h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $row["humi"]; ?>%</h2>
 				<label class="switch">
 					<input type="checkbox" checked>
 					<span class="slider round"></span>
 				</label>
 			</div>
 		</div>
-	</div>	
-	
+	</div>
+
 
 	<!-- Container (Contact Section) -->
 	<div id="contact" class="container-fluid bg-grey">

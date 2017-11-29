@@ -25,7 +25,7 @@ if(isset($_REQUEST['submit'])){
 			$query = mysqli_query($conn, $sql);
 			echo '<script type="text/javascript">alert("Update Member success!")</script>';
 
-		} 
+		}
 		else {
 			echo '<script>alert("Invalid Phone Number")</script>';
 		}
@@ -80,10 +80,10 @@ if(isset($_REQUEST['submit'])){
 			<h2><?= $_REQUEST['edit'] ? "Edit Account" : "Add Account"?></h2>
 			<p class="form-group">
 				<label for="usr" class="floatLabel">Username</label>
-				<?= 
+				<?=
 				$_REQUEST['edit'] ? "<input type='text' disabled='disabled' id='usr' name='usr' placeholder={$_REQUEST['un']}>" : '<input type="text" id="usr" name="usr">'
 				?>
-				
+
 			</p>
 			<p class="form-group">
 				<label for="pwd" class="floatLabel">Password</label>
@@ -103,7 +103,7 @@ if(isset($_REQUEST['submit'])){
 					<option>Manager</option>
 				</select>
 			</p>
-			<p class="text-right"><button class="btn btn-info btn-lg" id="submit" name="submit"><?= $_REQUEST['edit'] ? "Update" : "Insert" ?></button></p>
+			<p class="text-right"><button class="btn btn-info btn-lg" id="submit" name="submit"><?= $_REQUEST['edit'] ? "Update" : "Add" ?></button></p>
 		</form>
 	</div>
 </body>
