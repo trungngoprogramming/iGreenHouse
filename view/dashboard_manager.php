@@ -1,5 +1,5 @@
 <?php
-include("..session/connection_arduino.php");
+include("../session/connection_arduino.php");
 include("../connection/connection.php");
 include("../session/check_login_session.php");
 if (isset($_SESSION["username"])) {
@@ -57,6 +57,7 @@ $row = mysqli_fetch_assoc($result);
 
 	<!-- Container (Monitor Section) -->
 	<div id="monitor" class="container-fluid bg-grey">
+		<meta http-equiv="refresh" content="2">
 		<h2 class="text-center">MONITOR</h2>
 		<div class="row text-center">
 			<div class="col-sm-6">
