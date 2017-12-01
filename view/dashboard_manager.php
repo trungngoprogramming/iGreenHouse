@@ -15,7 +15,7 @@ if (isset($_SESSION["username"])) {
 $sql = "SELECT * FROM tempLog ORDER BY IDpara DESC LIMIT 1";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
- ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +57,7 @@ $row = mysqli_fetch_assoc($result);
 
 	<!-- Container (Monitor Section) -->
 	<div id="monitor" class="container-fluid bg-grey">
-		<meta http-equiv="refresh" content="2">
+		<meta http-equiv="refresh" content="60">
 		<h2 class="text-center">MONITOR</h2>
 		<div class="row text-center">
 			<div class="col-sm-6">
@@ -74,38 +74,66 @@ $row = mysqli_fetch_assoc($result);
 					<span class="slider round"></span>
 				</label>
 			</div>
+			<div class="col-sm-12">
+				<table class="table table-success table-inverse	">
+					<thead>
+						<tr>
+							<th>Temperature</th>
+							<th>Humidity</th>
+							<th>Time Stamp</th>
+							<th>Uptime</th>
+							<th>Downtime</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php 
+						$sql = "SELECT temperature, humidity, time_stamp, uptime, downtime
+						FROM tb_parameterLog AS a, tb_systemLog AS b WHERE a.ID = b.ID_para;";
+						$query = mysqli_query($conn, $sql);
+						while($row = $query->fetch_array(MYSQLI_ASSOC)): ?>
+						<tr>
+							<td><?= $row['temperature'] ?></td>
+							<td><?= $row['humidity'] ?></td>
+							<td><?= $row['time_stamp'] ?></td>
+							<td><?= $row['uptime'] ?></td>
+							<td><?= $row['downtime'] ?></td>
+						</tr>
+					<?php endwhile; ?>
+				</tbody>
+			</table>
 		</div>
 	</div>
+</div>
 
 
-	<!-- Container (Contact Section) -->
-	<div id="contact" class="container-fluid bg-grey">
-		<h2 class="text-center">CONTACT</h2>
-		<div class="row">
-			<div class="col-sm-5">
-				<p>Contact us and we'll get back to you within 24 hours.</p>
-				<p><span class="glyphicon glyphicon-map-marker"></span> DaNang, VietNam</p>
-				<p><span class="glyphicon glyphicon-phone"></span> +00 1515151515</p>
-				<p><span class="glyphicon glyphicon-envelope"></span> igreenhouse.customercare@gmail.com</p>
-			</div>
-			<div class="col-sm-7 slideanim">
-				<div class="row">
-					<div class="col-sm-6 form-group">
-						<input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
-					</div>
-					<div class="col-sm-6 form-group">
-						<input class="form-control" id="email" disabled="disabled" name="email" placeholder="Email" type="email" required>
-					</div>
+<!-- Container (Contact Section) -->
+<div id="contact" class="container-fluid bg-grey">
+	<h2 class="text-center">CONTACT</h2>
+	<div class="row">
+		<div class="col-sm-5">
+			<p>Contact us and we'll get back to you within 24 hours.</p>
+			<p><span class="glyphicon glyphicon-map-marker"></span> DaNang, VietNam</p>
+			<p><span class="glyphicon glyphicon-phone"></span> +00 1515151515</p>
+			<p><span class="glyphicon glyphicon-envelope"></span> igreenhouse.customercare@gmail.com</p>
+		</div>
+		<div class="col-sm-7 slideanim">
+			<div class="row">
+				<div class="col-sm-6 form-group">
+					<input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
 				</div>
-				<textarea style="resize: none" class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
-				<div class="row">
-					<div class="col-sm-12 form-group">
-						<input class="btn btn-default pull-right" type="submit" name="Submit" value="Sent"></input>
-					</div>
+				<div class="col-sm-6 form-group">
+					<input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+				</div>
+			</div>
+			<textarea style="resize: none" class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+			<div class="row">
+				<div class="col-sm-12 form-group">
+					<input class="btn btn-default pull-right" type="submit" name="Submit" value="Sent"></input>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
 </body>
 </html>
