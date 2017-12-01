@@ -40,7 +40,7 @@ if (isset($_REQUEST["btn_login"])) {
 			echo '<script type="text/javascript">alert("Username or Password is wrong!")</script>';
 		}
 		else{
-			$level = "SELECT * FROM tb_account WHERE username = '$username' AND password = '$password' AND level = 0";
+			$level = "SELECT * FROM tb_account WHERE username = '$username' AND password = '$password' AND is_admin = 0";
 			$query = mysqli_query($conn, $level);
 			$num_rows = mysqli_num_rows($query);
 			if ($num_rows == 1) {

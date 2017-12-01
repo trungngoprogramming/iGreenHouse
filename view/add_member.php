@@ -12,17 +12,21 @@ if (isset($_SESSION["username"])) {
 
 if(isset($_REQUEST['submit'])){
 	$username = $_REQUEST['usr'];
-	$password = $_REQUEST['pwd'];
+	$password = $_REQUEST['pss'];
 	$email 	  = $_REQUEST['eml'];
 	$phone    = $_REQUEST['phn'];
 	$level    = $_REQUEST['lv'] == 'Admin' ? 1 : 0;
-	if (isset($_REQUEST['edit'])) {
+	if (isset($_REQUEST['un'])) {
 		$username = $_REQUEST['un'];
+		$email = $_REQUEST['eml'];
+		$phone = $_REQUEST['phn'];
+		$level = $_REQUEST['lv'] == 'Admin' ? 1 : 0;
 		$numbersOnly = preg_replace("[^0-9]", "", $phone);
 		$numberOfDigits = strlen($numbersOnly);
 		if ($numberOfDigits == 10 or $numberOfDigits == 11) {
-			$sql = "UPDATE tb_account SET password='$password', email='$email', phone='$phone', level=$level WHERE username='$username'";
+			$sql = "UPDATE tb_account SET email='$email', phone='$phone', is_admin=$level WHERE username='$username'";
 			$query = mysqli_query($conn, $sql);
+			echo "$sql";
 			echo '<script type="text/javascript">alert("Update Member success!")</script>';
 
 		}
@@ -33,17 +37,24 @@ if(isset($_REQUEST['submit'])){
 	else{
 		$numbersOnly = preg_replace("[^0-9]", "", $phone);
 		$numberOfDigits = strlen($numbersOnly);
+		$count = $_SESSION['count'];
 		if ($numberOfDigits == 10 or $numberOfDigits == 11) {
-			$sql = "INSERT INTO tb_account (username, password, email, phone, level) VALUES ('$username', '$password', '$email', '$phone', $level);";
+			$sql = "SELECT * FROM tb_account WHERE username='$username';";
 			$query = mysqli_query($conn, $sql);
-			if ($query == TRUE) {
-				echo '<script type="text/javascript">alert("Create new Member success!")</script>';
-			}
-
-			else{
+			if ($row = mysqli_fetch_array($query)) {
 				echo '<script type="text/javascript">alert("Username is Exist!")</script>';
 			}
-		} else {
+			else{
+				$sql = "INSERT INTO tb_account (username, password, email, phone, is_admin) VALUES ('$username', '$password', '$email', '$phone', $level);";
+				$query = mysqli_query($conn, $sql);
+
+				if ($query == TRUE) {
+					echo '<script type="text/javascript">alert("Create new Member success!")</script>';
+				}
+			}
+		} 
+
+		else {
 			echo '<script>alert("Invalid Phone Number")</script>';
 		}
 	}
@@ -77,33 +88,39 @@ if(isset($_REQUEST['submit'])){
 
 	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="margin-left: 30px">
 		<form method="POST">
-			<h2><?= $_REQUEST['edit'] ? "Edit Account" : "Add Account"?></h2>
+			<h2><?= $_REQUEST['un'] ? "Edit Account" : "Add Account"?></h2>
 			<p class="form-group">
 				<label for="usr" class="floatLabel">Username</label>
 				<?=
-				$_REQUEST['edit'] ? "<input type='text' disabled='disabled' id='usr' name='usr' placeholder={$_REQUEST['un']}>" : '<input type="text" id="usr" name="usr">'
+				$_REQUEST['un'] ? "<input type='text' disabled='disabled' id='usr' name='usr' value='{$_REQUEST['un']}'>" : '<input type="text" id="usr" name="usr">'
 				?>
 
 			</p>
-			<p class="form-group">
-				<label for="pwd" class="floatLabel">Password</label>
-				<input type="password" id="pwd" name="pwd">
-			</p>
+			<?= $_REQUEST['un'] ? "" :
+			'<p class="form-group">
+			<label for="pss" class="floatLabel">Password</label>
+			<input type="password" id="pss" name="pss">
+			</p>'
+			?>
 			<p class="form-group">
 				<label for="eml" class="floatLabel">Email</label>
-				<input type="email" id="eml" name="eml">
+				<?= $_REQUEST['un'] ? "<input type='email' id='eml' name='eml' value='{$_REQUEST['em']}'>" : '<input type="email" id="eml" name="eml">'?>
 			</p>
 			<p class="form-group">
 				<label for="eml" class="floatLabel">Phone</label>
-				<input type="text" id="phn" name="phn">
+				<?= $_REQUEST['un'] ? "<input type='text' id='phn' name='phn' value='{$_REQUEST['pn']}'>" : '<input type="text" id="phn" name="phn">' ?>
 			</p>
 			<p class="form-group">
 				<select class="form-control" id="sel1" name="lv">
-					<option>Admin</option>
-					<option>Manager</option>
+					<?= $_REQUEST['ad'] == "admin" ? 
+					"<option>Admin</option>
+					<option>Manager</option>" :
+					"<option>Manager</option>
+					<option>Admin</option>"
+					?>
 				</select>
 			</p>
-			<p class="text-right"><button class="btn btn-info btn-lg" id="submit" name="submit"><?= $_REQUEST['edit'] ? "Update" : "Add" ?></button></p>
+			<p class="text-right"><button class="btn btn-info btn-lg" id="submit" name="submit"><?= $_REQUEST['un'] ? "Update" : "Add" ?></button></p>
 		</form>
 	</div>
 </body>
