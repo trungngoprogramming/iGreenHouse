@@ -12,7 +12,7 @@ if (isset($_SESSION["username"])) {
 <?php
 
 
-$sql = "SELECT * FROM tempLog ORDER BY IDpara DESC LIMIT 1";
+$sql = "SELECT * FROM tb_parameterLog ORDER BY ID DESC LIMIT 1";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 
@@ -66,7 +66,12 @@ $row = mysqli_fetch_assoc($result);
 			<div class="col-sm-6">
 				<h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $row["temp"]; $temp ?>&#8451;</h2>
 				<label class="switch">
-					<input type="checkbox" disabled="disabled">
+					<?=
+					$_SESSION['fan'] == 1 ? 
+					'<input type="checkbox" disabled="disabled" checked>'
+					:
+					'<input type="checkbox" disabled="disabled">'
+					?>
 					<span class="slider round"></span>
 					<h3 style="margin-top: 40px">FAN</h3>
 				</label>
@@ -74,7 +79,12 @@ $row = mysqli_fetch_assoc($result);
 			<div class="col-sm-6">
 				<h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $row["humi"]; ?>%</h2>
 				<label class="switch">
-					<input type="checkbox" disabled="disabled">
+					<?=
+					$_SESSION['pump'] == 1 ?
+					'<input type="checkbox" disabled="disabled" checked>'
+					:
+					'<input type="checkbox" disabled="disabled">'
+					?>
 					<span class="slider round"></span>
 					<h3 style="margin-top: 40px">PUMP</h3>
 				</label>

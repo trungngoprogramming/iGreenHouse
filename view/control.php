@@ -9,38 +9,43 @@ if (isset($_SESSION["username"])) {
 }
 ?>
 
+<?php 
+
+$sql = "SELECT * FROM tb_parameterLog ORDER BY ID DESC LIMIT 1";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+
+?>
+
 <?php
 
 if (isset($_REQUEST['submit'])) {
-	echo "hello";
+	$_SESSION['auto'] = 'n';
 	if (isset($_REQUEST['fan'])) {
-		$fan = 1;
-		echo "aaa";
+		$_SESSION['fan'] = 1;
+		$fan = $_SESSION['fan'];		
+	}
+
+	if (!isset($_REQUEST['fan'])) {
+		$_SESSION['fan'] = 0;
+		$fan = $_SESSION['fan'];		
 	}
 
 	if (isset($_REQUEST['pump'])) {
-		$pump = 1;
-		echo "bbb";
+		$_SESSION['pump'] = 1;
+		$pump = $_SESSION['pump'];
 	}
 
-	header("Location: /view/control.php?fan=$fan&pump=$pump");
+	if (!isset($_REQUEST['pump'])) {
+		$_SESSION['pump'] = 0;
+		$pump = $_SESSION['pump'];
+	}
 }
 
-if (isset($_GET['fan'])) {
-		echo '
-		<div class="popup">
-			<h4 style="color: #e74c3c">Customize Setting is Success!</h4>
-			<div class="text-right">
-				<a href="control.php" class="btn btn-danger" name="ok">Ok</a>
-			</div>
-		</div>
-	';
-}
-
-$fan = $_GET["fan"]; 
+// $fan = $_SESSION['fan'];
 $fantextfile = "FANstate.txt"; 
 
-$pump = $_GET["pump"];
+// $pump = $_SESSION['pump'];
 $pumptextfile = "PUMPstate.txt";
 
 $fileLocation = "$fantextfile";
@@ -55,46 +60,36 @@ $stringToWrite = "$pump"; // Write either 1 or 0 depending on request from index
 fwrite($fh, $stringToWrite); // Writes it to the .txt file 
 fclose($fh); 
 
-$temp = $_REQUEST['temp'];
-$humi = $_REQUEST['humi'];
+
 if (isset($_REQUEST['txt_submit'])) {
-	header("Location: /view/control.php?temp=$temp&humi=$humi&auto=y");
+	$_SESSION['auto'] = 'y';
+	if (isset($_POST['t']) || isset($_POST['h'])) {
+		$_SESSION['temp'] = $_POST['t'];
+		$_SESSION['humi'] = $_POST['h'];
+	}
 }
 
-if (isset($_GET['temp'])) {
-		echo '
-		<div class="popup">
-			<h4 style="color: #e74c3c">Auto Setting is Success!</h4>
-			<div class="text-right">
-				<a href="control.php?auto=y" class="btn btn-danger" name="ok">Ok</a>
-			</div>
-		</div>
-	';
-}
-
-$txt_temp = $_GET['temp'];
 $temptextfile = "TEMPstate.txt";
 
-$txt_humi = $_GET['humi'];
 $humitextfile = "HUMIstate.txt"; 
 
 $fileLocation = "$temptextfile";
 $fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
-$stringToWrite = "$temp"; // Write either 1 or 0 depending on request from index.php 
+$stringToWrite = $_SESSION['temp']; // Write either 1 or 0 depending on request from index.php 
 fwrite($fh, $stringToWrite); // Writes it to the .txt file 
 fclose($fh);
 
 $fileLocation = "$humitextfile";
 $fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
-$stringToWrite = "$humi"; // Write either 1 or 0 depending on request from index.php 
+$stringToWrite = $_SESSION['humi']; // Write either 1 or 0 depending on request from index.php 
 fwrite($fh, $stringToWrite); // Writes it to the .txt file 
 fclose($fh);
 $auto = $_GET['auto'];
-if (isset($auto)) {
+if ($auto='y') {
 	$autotextfile = "AUTOstate.txt";
 	$fileLocation = "$autotextfile";
 	$fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
-	$stringToWrite = "$auto"; // Write either 1 or 0 depending on request from index.php 
+	$stringToWrite = $_SESSION['auto']; // Write either 1 or 0 depending on request from index.php 
 	fwrite($fh, $stringToWrite); // Writes it to the .txt file 
 	fclose($fh);
 }
@@ -145,19 +140,9 @@ if (isset($auto)) {
 		<div class="row text-center">
 			<div class="col-sm-6">
 				<h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $row["temp"]; $temp ?>&#8451;</h2>
-				<!-- <label class="switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-					<h3 style="margin-top: 40px">FAN</h3>
-				</label> -->
 			</div>
 			<div class="col-sm-6">
 				<h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $row["humi"]; ?>%</h2>
-				<!-- <label class="switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-					<h3 style="margin-top: 40px">PUMP</h3>
-				</label> -->
 			</div>
 		</div>
 	</div>
@@ -166,7 +151,7 @@ if (isset($auto)) {
 		<div>
 			<?=
 
-			!isset($_GET['auto']) ?
+			!$_GET['auto'] == 'y' ?
 
 			'
 			<a href="control.php?auto=y" class="btn btn-lg btn-success">Auto</a>
@@ -179,46 +164,52 @@ if (isset($auto)) {
 			?>
 			
 		</div>
-		<?= 
 
-		isset($_GET['auto']) ? 
-		'
-		<form action="control.php" method="POST">
-			<div class="row text-center">
-				<input type="text" class="btn btn-lg" name="temp" placeholder="Temperature">
-				<input type="text" class="btn btn-lg" name="humi" placeholder="Humidity">
-				<button name="txt_submit" class="btn btn-lg btn-success">OK</button>
-			</div>
-		</form>
-		'
+		<?php if ($_GET['auto'] == 'y'): ?>
+			<form action="control.php?auto=y" method="POST">
+				<div class="row text-center">
+					<input type="text" class="btn btn-lg" name="t" placeholder="Temperature">
+					<input type="text" class="btn btn-lg" name="h" placeholder="Humidity">
+					<button name="txt_submit" class="btn btn-lg btn-success">OK</button>
+				</div>
+			</form>
+		<?php endif ?>
 
-		:
-
-		'<form action="control.php" method="POST">
-			<div class="row text-center">
-				<div class="col-sm-6">
-					<label class="switch">
-						<input type="checkbox" name="fan">
-						<span class="slider round"></span>
-						<h3 style="margin-top: 40px">FAN</h3>
-					</label>
+		<?php if (!$_GET['auto'] == 'y'): ?>
+			<form action="control.php" method="POST">
+				<div class="row text-center">
+					<div class="col-sm-6">
+						<label class="switch">
+							<?=
+							$_SESSION['fan'] == 1 ? 
+							'<input type="checkbox" name="fan" checked>'
+							:
+							'<input type="checkbox" name="fan">'
+							?>
+							<span class="slider round"></span>
+							<h3 style="margin-top: 40px">FAN</h3>
+						</label>
+					</div>
+					<div class="col-sm-6">
+						<label class="switch">
+							<?=
+							$_SESSION['pump'] == 1 ? 
+							'<input type="checkbox" name="pump" checked>'
+							:
+							'<input type="checkbox" name="pump">'
+							?>
+							<span class="slider round"></span>
+							<h3 style="margin-top: 40px">PUMP</h3>
+						</label>
+					</div>
+					<div class="text-center">
+						<label class="switch">
+							<button class="btn btn-lg btn-success" name="submit">OK</button>
+						</label>
+					</div>
 				</div>
-				<div class="col-sm-6">
-					<label class="switch">
-						<input type="checkbox" name="pump">
-						<span class="slider round"></span>
-						<h3 style="margin-top: 40px">PUMP</h3>
-					</label>
-				</div>
-				<div class="text-center">
-					<label class="switch">
-						<button class="btn btn-lg btn-success" name="submit">OK</button>
-					</label>
-				</div>
-			</div>
-		</form>
-		'
-		?>
+			</form>
+		<?php endif ?>
 		
 	</div>
 
