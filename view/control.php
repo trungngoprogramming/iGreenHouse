@@ -89,6 +89,15 @@ $fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up 
 $stringToWrite = "$humi"; // Write either 1 or 0 depending on request from index.php 
 fwrite($fh, $stringToWrite); // Writes it to the .txt file 
 fclose($fh);
+$auto = $_GET['auto'];
+if (isset($auto)) {
+	$autotextfile = "AUTOstate.txt";
+	$fileLocation = "$autotextfile";
+	$fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
+	$stringToWrite = "$auto"; // Write either 1 or 0 depending on request from index.php 
+	fwrite($fh, $stringToWrite); // Writes it to the .txt file 
+	fclose($fh);
+}
 
 ?>
 
@@ -131,7 +140,7 @@ fclose($fh);
 
 	<!-- Container (Monitor Section) -->
 	<div id="monitor" class="container-fluid bg-grey">
-		<meta http-equiv="refresh" content="2">
+		<!-- <meta http-equiv="refresh" content="2"> -->
 		<h2 class="text-center">CONTROL</h2>
 		<div class="row text-center">
 			<div class="col-sm-6">
