@@ -64,10 +64,10 @@ $row = mysqli_fetch_assoc($result);
 		<h2 class="text-center">MONITOR</h2>
 		<div class="row text-center">
 			<div class="col-sm-6">
-				<h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $row["temp"]; $temp ?>&#8451;</h2>
+				<h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $row["temperature"]; $temp ?>&#8451;</h2>
 				<label class="switch">
 					<?=
-					$_SESSION['fan'] == 1 ? 
+					$_SESSION['fan'] == 1 ?
 					'<input type="checkbox" disabled="disabled" checked>'
 					:
 					'<input type="checkbox" disabled="disabled">'
@@ -77,7 +77,7 @@ $row = mysqli_fetch_assoc($result);
 				</label>
 			</div>
 			<div class="col-sm-6">
-				<h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $row["humi"]; ?>%</h2>
+				<h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $row["humidity"]; ?>%</h2>
 				<label class="switch">
 					<?=
 					$_SESSION['pump'] == 1 ?

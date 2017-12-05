@@ -9,7 +9,7 @@ if (isset($_SESSION["username"])) {
 }
 ?>
 
-<?php 
+<?php
 
 $sql = "SELECT * FROM tb_parameterLog ORDER BY ID DESC LIMIT 1";
 $result = mysqli_query($conn, $sql);
@@ -24,11 +24,11 @@ echo $_SESSION['fan'] . ', ' . $_SESSION['pump'];
 if (isset($_REQUEST['submit'])) {
 	$_SESSION['auto'] = 'n';
 	if (isset($_REQUEST['fan'])) {
-		$_SESSION['fan'] = '1';		
+		$_SESSION['fan'] = '1';
 	}
 
 	if (!isset($_REQUEST['fan'])) {
-		$_SESSION['fan'] = '0';		
+		$_SESSION['fan'] = '0';
 	}
 
 	if (isset($_REQUEST['pump'])) {
@@ -40,21 +40,21 @@ if (isset($_REQUEST['submit'])) {
 	}
 }
 
-$fantextfile = "FANstate.txt"; 
+$fantextfile = "FANstate.txt";
 
 $pumptextfile = "PUMPstate.txt";
 
 $fileLocation = "$fantextfile";
 $fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
-$stringToWrite = $_SESSION['fan']; // Write either 1 or 0 depending on request from index.php 
-fwrite($fh, $stringToWrite); // Writes it to the .txt file 
+$stringToWrite = $_SESSION['fan']; // Write either 1 or 0 depending on request from index.php
+fwrite($fh, $stringToWrite); // Writes it to the .txt file
 fclose($fh);
 
 $fileLocation = "$pumptextfile";
 $fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
-$stringToWrite = $_SESSION['pump']; // Write either 1 or 0 depending on request from index.php 
-fwrite($fh, $stringToWrite); // Writes it to the .txt file 
-fclose($fh); 
+$stringToWrite = $_SESSION['pump']; // Write either 1 or 0 depending on request from index.php
+fwrite($fh, $stringToWrite); // Writes it to the .txt file
+fclose($fh);
 
 
 if (isset($_REQUEST['txt_submit'])) {
@@ -70,26 +70,26 @@ $h = $_SESSION['humi'];
 
 $temptextfile = "TEMPstate.txt";
 
-$humitextfile = "HUMIstate.txt"; 
+$humitextfile = "HUMIstate.txt";
 
 $fileLocation = "$temptextfile";
 $fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
-$stringToWrite = $_SESSION['temp']; // Write either 1 or 0 depending on request from index.php 
-fwrite($fh, $stringToWrite); // Writes it to the .txt file 
+$stringToWrite = $_SESSION['temp']; // Write either 1 or 0 depending on request from index.php
+fwrite($fh, $stringToWrite); // Writes it to the .txt file
 fclose($fh);
 
 $fileLocation = "$humitextfile";
 $fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
-$stringToWrite = $_SESSION['humi']; // Write either 1 or 0 depending on request from index.php 
-fwrite($fh, $stringToWrite); // Writes it to the .txt file 
+$stringToWrite = $_SESSION['humi']; // Write either 1 or 0 depending on request from index.php
+fwrite($fh, $stringToWrite); // Writes it to the .txt file
 fclose($fh);
 $auto = $_GET['auto'];
 if ($auto='y') {
 	$autotextfile = "AUTOstate.txt";
 	$fileLocation = "$autotextfile";
 	$fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
-	$stringToWrite = $_SESSION['auto']; // Write either 1 or 0 depending on request from index.php 
-	fwrite($fh, $stringToWrite); // Writes it to the .txt file 
+	$stringToWrite = $_SESSION['auto']; // Write either 1 or 0 depending on request from index.php
+	fwrite($fh, $stringToWrite); // Writes it to the .txt file
 	fclose($fh);
 }
 
@@ -138,10 +138,10 @@ if ($auto='y') {
 		<h2 class="text-center">CONTROL</h2>
 		<div class="row text-center">
 			<div class="col-sm-6">
-				<h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $row["temp"]; $temp ?>&#8451;</h2>
+				<h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $row["temperature"]; $temp ?>&#8451;</h2>
 			</div>
 			<div class="col-sm-6">
-				<h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $row["humi"]; ?>%</h2>
+				<h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $row["humidity"]; ?>%</h2>
 			</div>
 		</div>
 	</div>
@@ -161,7 +161,7 @@ if ($auto='y') {
 			'<a href="control.php" class="btn btn-lg btn-success">Customize</a>'
 
 			?>
-			
+
 		</div>
 
 		<?php if ($_GET['auto'] == 'y'): ?>
@@ -171,7 +171,7 @@ if ($auto='y') {
 						<label class="floatLabel">Temperature</label>
 						<input id="username" style="width: 50px" name="t" <?= "value='$t'" ?> type="text">
 					</p>
-					
+
 					<p>
 						<label class="floatLabel">Humidity</label>
 						<input id="username" style="width: 50px; margin-left: 23px" name="h" <?= "value='$h'" ?> type="text">
@@ -190,7 +190,7 @@ if ($auto='y') {
 					<div class="col-sm-6">
 						<label class="switch">
 							<?=
-							$_SESSION['fan'] == 1 ? 
+							$_SESSION['fan'] == 1 ?
 							'<input type="checkbox" name="fan" checked>'
 							:
 							'<input type="checkbox" name="fan">'
@@ -202,7 +202,7 @@ if ($auto='y') {
 					<div class="col-sm-6">
 						<label class="switch">
 							<?=
-							$_SESSION['pump'] == 1 ? 
+							$_SESSION['pump'] == 1 ?
 							'<input type="checkbox" name="pump" checked>'
 							:
 							'<input type="checkbox" name="pump">'
@@ -212,14 +212,14 @@ if ($auto='y') {
 						</label>
 					</div>
 					<div class="text-center">
-						<label class="switch">
+						<p>
 							<button class="btn btn-lg btn-success" name="submit">OK</button>
-						</label>
+						</p>
 					</div>
 				</div>
 			</form>
 		<?php endif ?>
-		
+
 	</div>
 
 </body>
