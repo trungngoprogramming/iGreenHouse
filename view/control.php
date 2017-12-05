@@ -19,44 +19,40 @@ $row = mysqli_fetch_assoc($result);
 
 <?php
 
+echo $_SESSION['fan'] . ', ' . $_SESSION['pump'];
+
 if (isset($_REQUEST['submit'])) {
 	$_SESSION['auto'] = 'n';
 	if (isset($_REQUEST['fan'])) {
-		$_SESSION['fan'] = 1;
-		$fan = $_SESSION['fan'];		
+		$_SESSION['fan'] = '1';		
 	}
 
 	if (!isset($_REQUEST['fan'])) {
-		$_SESSION['fan'] = 0;
-		$fan = $_SESSION['fan'];		
+		$_SESSION['fan'] = '0';		
 	}
 
 	if (isset($_REQUEST['pump'])) {
-		$_SESSION['pump'] = 1;
-		$pump = $_SESSION['pump'];
+		$_SESSION['pump'] = '1';
 	}
 
 	if (!isset($_REQUEST['pump'])) {
-		$_SESSION['pump'] = 0;
-		$pump = $_SESSION['pump'];
+		$_SESSION['pump'] = '0';
 	}
 }
 
-// $fan = $_SESSION['fan'];
 $fantextfile = "FANstate.txt"; 
 
-// $pump = $_SESSION['pump'];
 $pumptextfile = "PUMPstate.txt";
 
 $fileLocation = "$fantextfile";
 $fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
-$stringToWrite = "$fan"; // Write either 1 or 0 depending on request from index.php 
+$stringToWrite = $_SESSION['fan']; // Write either 1 or 0 depending on request from index.php 
 fwrite($fh, $stringToWrite); // Writes it to the .txt file 
 fclose($fh);
 
 $fileLocation = "$pumptextfile";
 $fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
-$stringToWrite = "$pump"; // Write either 1 or 0 depending on request from index.php 
+$stringToWrite = $_SESSION['pump']; // Write either 1 or 0 depending on request from index.php 
 fwrite($fh, $stringToWrite); // Writes it to the .txt file 
 fclose($fh); 
 
@@ -68,6 +64,9 @@ if (isset($_REQUEST['txt_submit'])) {
 		$_SESSION['humi'] = $_POST['h'];
 	}
 }
+
+$t = $_SESSION['temp'];
+$h = $_SESSION['humi'];
 
 $temptextfile = "TEMPstate.txt";
 
@@ -168,9 +167,19 @@ if ($auto='y') {
 		<?php if ($_GET['auto'] == 'y'): ?>
 			<form action="control.php?auto=y" method="POST">
 				<div class="row text-center">
-					<input type="text" class="btn btn-lg" name="t" placeholder="Temperature">
-					<input type="text" class="btn btn-lg" name="h" placeholder="Humidity">
-					<button name="txt_submit" class="btn btn-lg btn-success">OK</button>
+					<p>
+						<label class="floatLabel">Temperature</label>
+						<input id="username" style="width: 50px" name="t" <?= "value='$t'" ?> type="text">
+					</p>
+					
+					<p>
+						<label class="floatLabel">Humidity</label>
+						<input id="username" style="width: 50px; margin-left: 23px" name="h" <?= "value='$h'" ?> type="text">
+					</p>
+
+					<p>
+						<button name="txt_submit" class="btn btn-lg btn-success">OK</button>
+					</p>
 				</div>
 			</form>
 		<?php endif ?>
