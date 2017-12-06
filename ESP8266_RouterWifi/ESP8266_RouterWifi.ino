@@ -1,9 +1,9 @@
 #include "ESP8266WiFi.h"
 
-const char server[] = "www.000webhost.com"; 
+IPAddress server(192,168,1,8); // địa chỉ ip của máy tính, sử dụng ipconfig (ifconfig với ubuntu) để lấy
 
-const char* MY_SSID = "DTU";
-const char* MY_PWD =  "";
+const char* MY_SSID = "trungngo";
+const char* MY_PWD =  "khongnoi";
 
 WiFiClient client;
 
@@ -39,14 +39,14 @@ void loop() {
 
   Serial.println("\nStarting connection to server..."); 
   // if you get a connection, report back via serial:
-  if (client.connect(server, 80)) {
+  if (client.connect(server, 8000)) {                    // port sử dụng khi dùng câu lệnh php -S
     Serial.println("connected to server");
     WiFi.printDiag(Serial);
 
     String data = "humi="+(String) humi+"&temp="+(String) temp;
 
     client.println("POST /session/connection_arduino.php HTTP/1.1"); //change this if using your Sub-domain
-    client.print("Host: files.000webhost.com\n");                 //change this if using your Domain
+    client.print("Host: \n");                 //change this if using your Domain
     client.println("User-Agent: ESP8266/1.0");
     client.println("Connection: close"); 
     client.println("Content-Type: application/x-www-form-urlencoded");
@@ -80,6 +80,4 @@ void printWifiStatus() {
   Serial.print(rssi);
   Serial.println(" dBm");
 }
-
-
 

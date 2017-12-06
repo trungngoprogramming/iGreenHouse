@@ -33,25 +33,25 @@ if (isset($_REQUEST["btn_login"])) {
 		echo '<script type="text/javascript">alert("Password cannot empty")</script>';
 	}
 	else{
-		$sql = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
+		$sql = "SELECT * FROM tb_account WHERE username = '$username' AND password = '$password'";
 		$query = mysqli_query($conn, $sql);
 		$num_rows = mysqli_num_rows($query);
 		if ($num_rows == 0) {
 			echo '<script type="text/javascript">alert("Username or Password is wrong!")</script>';
 		}
 		else{
-			$level = "SELECT * FROM user WHERE username = '$username' AND password = '$password' AND level = 0";
+			$level = "SELECT * FROM tb_account WHERE username = '$username' AND password = '$password' AND is_admin = 0";
 			$query = mysqli_query($conn, $level);
 			$num_rows = mysqli_num_rows($query);
 			if ($num_rows == 1) {
 				$_SESSION['username'] = $username;
-				$_SESSION['isadmin'] = 1;
-				header('Location: /view/dashboard_admin.php');	
+				$_SESSION['isadmin'] = 0;
+				header('Location: /view/dashboard_manager.php');	
 			}
 			else{
 				$_SESSION['username'] = $username;
-				$_SESSION['isadmin'] = 0;
-				header('Location: /view/dashboard_manager.php');
+				$_SESSION['isadmin'] = 1;
+				header('Location: /view/dashboard_admin.php');
 			}
 		}
 	}
