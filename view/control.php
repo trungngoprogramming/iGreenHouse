@@ -125,6 +125,7 @@ if ($auto='y') {
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="dashboard_manager.php">MONITOR</a></li>
+					<li><a href="time.php">TIMER</a></li>
 					<li><a href="../view/reset_password.php">RESET-PASSWORD</a></li>
 					<li><a href="/session/logout_session.php">LOGOUT</a></li>
 				</ul>
@@ -137,11 +138,11 @@ if ($auto='y') {
 		<!-- <meta http-equiv="refresh" content="2"> -->
 		<h2 class="text-center">CONTROL</h2>
 		<div class="row text-center">
-			<div class="col-sm-6">
-				<h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $row["temperature"]; $temp ?>&#8451;</h2>
+			<div class="col-sm-6" style="background-color: #fff; padding: 2em; color: #e74c3c">
+				<h2 style="color: #c0392b">Temperature</h2><h2 style="color: #e74c3c" id="temp"></h2>
 			</div>
-			<div class="col-sm-6">
-				<h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $row["humidity"]; ?>%</h2>
+			<div class="col-sm-6" style="background-color: #fff; padding: 2em; color: #3498db">
+				<h2 style="color: #2980b9">Humidity</h2><h2 id="humi" style="color: #3498db"></h2>
 			</div>
 		</div>
 	</div>
@@ -158,7 +159,7 @@ if ($auto='y') {
 
 			:
 
-			'<a href="control.php" class="btn btn-lg btn-success">Customize</a>'
+			'<a href="control.php" class="btn btn-lg btn-success">Manual</a>'
 
 			?>
 
@@ -187,29 +188,29 @@ if ($auto='y') {
 		<?php if (!$_GET['auto'] == 'y'): ?>
 			<form action="control.php" method="POST">
 				<div class="row text-center">
-					<div class="col-sm-6">
+					<div class="col-sm-6" style="padding: 1em">
 						<label class="switch">
 							<?=
-							$_SESSION['fan'] == 1 ?
+							$_SESSION['fan'] == '1' ?
 							'<input type="checkbox" name="fan" checked>'
 							:
 							'<input type="checkbox" name="fan">'
 							?>
 							<span class="slider round"></span>
-							<h3 style="margin-top: 40px">FAN</h3>
 						</label>
+						<h3>FAN</h3>
 					</div>
-					<div class="col-sm-6">
+					<div class="col-sm-6" style="padding: 1em">
 						<label class="switch">
 							<?=
-							$_SESSION['pump'] == 1 ?
+							$_SESSION['pump'] == '1' ?
 							'<input type="checkbox" name="pump" checked>'
 							:
 							'<input type="checkbox" name="pump">'
 							?>
 							<span class="slider round"></span>
-							<h3 style="margin-top: 40px">PUMP</h3>
 						</label>
+						<h3>PUMP</h3>
 					</div>
 					<div class="text-center">
 						<p>
@@ -222,5 +223,13 @@ if ($auto='y') {
 
 	</div>
 
+	<script type="text/javascript">
+		var x = setInterval(function refreshTH(){
+			var temp = "<?= $row['temperature'] ?>&#8451;";
+			var humi = "<?= $row['humidity'] ?>%";
+			document.getElementById('temp').innerHTML = temp;
+			document.getElementById('humi').innerHTML = humi;
+		}, 1000);
+	</script>
 </body>
 </html>
