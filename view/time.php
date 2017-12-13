@@ -15,6 +15,49 @@ $sql = "SELECT * FROM tb_parameterLog ORDER BY ID DESC";
 $query = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($query);
 
+if (isset($_REQUEST['time_submit'])) {
+	$_SESSION['timer'] = $_REQUEST['hours'];
+	$date = date("d-m-Y H:i:s", strtotime($_SESSION['timer']));
+	$fan = $_REQUEST['fs'];
+	$pump = $_REQUEST['ps'];
+	if ($fan == "On") {
+		$fs = 1;
+	}
+
+	if ($fan == "Off") {
+		$fs = 0;
+	}
+
+	if ($pump == "On") {
+		$ps = 1;
+	}
+
+	if ($pump == "Off") {
+		$ps = 0;
+	}
+
+	$_SESSION['fan'] = $fs;
+	$_SESSION['pump'] = $ps;
+}
+
+if (isset($_SESSION['hide'])) {
+	$fantextfile = "FANstate.txt";
+
+	$pumptextfile = "PUMPstate.txt";
+
+	$fileLocation = "$fantextfile";
+	$fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
+	$stringToWrite = $_SESSION['fan']; // Write either 1 or 0 depending on request from index.php
+	fwrite($fh, $stringToWrite); // Writes it to the .txt file
+	fclose($fh);
+
+	$fileLocation = "$pumptextfile";
+	$fh = fopen($fileLocation, 'w   ') or die("Something went wrong!"); // Opens up the .txt file for writing and replaces any previous content
+	$stringToWrite = $_SESSION['pump']; // Write either 1 or 0 depending on request from index.php
+	fwrite($fh, $stringToWrite); // Writes it to the .txt file
+	fclose($fh);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -61,9 +104,10 @@ $row = mysqli_fetch_assoc($query);
 		<div class="row text-center">
 			<div class="col-sm-12" id="txt_date" style="color: #c0392b"></div>
 			<div class="col-sm-12" id="txt"></div>
-			<div id="demo"></div>
+			<div id="demo" name="demo"></div>
 			<div>
 				<form class="form-group" method="POST" action="time.php">
+					<p><input type="hidden" id="hide" name="hide"></p>
 					<p>
 						<input id="time" type="datetime-local" name="hours">	
 					</p>
@@ -109,7 +153,7 @@ $row = mysqli_fetch_assoc($query);
 						?>
 					</p>
 					
-					<button class="btn btn-success" onclick="getTimer()" style="margin-bottom: 5px" name="time_submit">OK</button>
+					<button class="btn btn-success" style="margin-bottom: 5px" name="time_submit">OK</button>
 				</form>
 			</div>
 		</div>
@@ -162,19 +206,37 @@ $row = mysqli_fetch_assoc($query);
 		    return i;
 		}
 
-		function getTimer(){
-			var countDownDate = new Date(document.getElementById('time').value).getTime();
-		}
+		// Set the date we're counting down to
+		var timer = "<?= $_SESSION['timer'] ?>";
+		var countDownDate = new Date(timer).getTime();
 
-		function Timer(){
-			var now = new Date().getTime();
-			var distance = countDownDate - now;
-			if (distance < 0) {
-				document.getElementById('demo').innerHTML = "Hello";
-			}
-		}
+		// Update the count down every 1 second
+		var x = setInterval(function() {
 
-		setInterval(Timer(), 1000);
+		  // Get todays date and time
+		  var now = new Date().getTime();
+
+		  // Find the distance between now an the count down date
+		  var distance = countDownDate - now;
+
+		  // Time calculations for days, hours, minutes and seconds
+		  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+		  // Display the result in the element with id="demo"
+		  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+		  + minutes + "m " + seconds + "s ";
+
+		  // If the count down is finished, write some text 
+		  if (distance < 0) {
+		  	clearInterval(x);
+		  	document.getElementById("demo").innerHTML = "Success!";
+		  	<?php $_SESSION['hide'] = "hide"; ?>
+		  }
+		  // if (a == 1) {stop();}
+		}, 1000);
 	</script>
 </body>
 </html>
