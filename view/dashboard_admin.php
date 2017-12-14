@@ -76,12 +76,12 @@ $_SESSION['username'] = "y";
 					<tr>
 						<td><?= $id = $row['username'] ?></td>
 						<td><?= "*************" ?></td>
-						<td><?= $row['level']==1 ? 'admin' : 'manager' ?></td>
-						<td><?= $row['email'] ?></td>
-						<td><?= $row['phone'] ?></td>
+						<td><?= $ad = $row['is_admin']==1 ? 'admin' : 'manager' ?></td>
+						<td><?= $em = $row['email'] ?></td>
+						<td><?= $pn = $row['phone'] ?></td>
 						<td>
 							<?php echo '
-							<a href="/view/add_member.php?un='.$id.'&edit=y" class="btn btn-success">Edit</a>' ?>
+							<a href="/view/add_member.php?un='.$id.'&ad='.$ad.'&em='.$em.'&pn='.$pn.'" class="btn btn-success">Edit</a>' ?>
 							<?php echo '
 							<a href="/view/dashboard_admin.php?delete='.$id.'" class="btn btn-danger">Delete</a>'; ?>
 
