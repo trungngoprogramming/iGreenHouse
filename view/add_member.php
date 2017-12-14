@@ -94,7 +94,6 @@ if(isset($_REQUEST['submit'])){
 				<?=
 				$_REQUEST['un'] ? "<input type='text' disabled='disabled' id='usr' name='usr' value='{$_REQUEST['un']}'>" : '<input type="text" id="usr" name="usr">'
 				?>
-
 			</p>
 			<?= $_REQUEST['un'] ? "" :
 			'<p class="form-group">

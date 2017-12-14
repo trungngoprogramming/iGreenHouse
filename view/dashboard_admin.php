@@ -64,7 +64,7 @@ $_SESSION['username'] = "y";
 				<tr>
 					<th>Username</th>
 					<th>Password</th>
-					<th>Position</th>
+					<th>Role</th>
 					<th>Email</th>
 					<th>Phone</th>
 					<th>Setting</th>
@@ -84,7 +84,7 @@ $_SESSION['username'] = "y";
 							<a href="/view/add_member.php?un='.$id.'&ad='.$ad.'&em='.$em.'&pn='.$pn.'" class="btn btn-success">Edit</a>' ?>
 							<?php echo '
 							<a href="/view/dashboard_admin.php?delete='.$id.'" class="btn btn-danger">Delete</a>'; ?>
-							
+
 						</td>
 					</tr>
 				<?php endwhile; ?>
