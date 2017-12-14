@@ -124,12 +124,34 @@ $row = mysqli_fetch_assoc($result);
 	</div>
 
 	<script type="text/javascript">
-		var x = setInterval(function refreshTH(){
-			var temp = "<?= $row['temperature'] ?>&#8451;";
-			var humi = "<?= $row['humidity'] ?>%";
-			document.getElementById('temp').innerHTML = temp;
-			document.getElementById('humi').innerHTML = humi;
-		}, 1000);
+
+
+		$(document).ready(function() {
+setInterval(function() {
+
+
+	$.get("api.php?act=getInfo",function(result) {
+
+					if(result.code==500) {
+						$("#temp").html("Error");
+
+					$("#humi").html("Error");
+					}else {
+						$("#temp").html(result.temperature + " &#8451");
+
+					$("#humi").html(result.humidity + " %");
+					}
+			},"json");
+},500);
+
+
+
+});
+
+
+
+
+
 	</script>
 </body>
 </html>
