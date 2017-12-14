@@ -5,6 +5,7 @@
 <?php
     $temp = $_REQUEST["temp"];
     $humi = $_REQUEST["humi"];
-    $sql = "INSERT INTO tempLog (temp, humi) VALUES ('$temp', $humi)";
+    $time = 'localtimestamp()';
+    $sql = "INSERT INTO tempLog (temperature, humidity, time_stamp) VALUES ($temp, $humi, $time)";
     mysqli_query($conn, $sql);
 ?>

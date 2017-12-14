@@ -18,6 +18,14 @@ h4 {
   margin-bottom: 30px;
 }  
 
+#txt, #txt_date{
+  font-weight: bold;
+  font-size: 24px;
+  background-color: #fff;
+  /*padding: 2em; */
+  color: #e74c3c;
+}
+
 .container-fluid {
   padding: 60px 50px;
 }

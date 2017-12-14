@@ -16,7 +16,6 @@ $sql = "SELECT * FROM tb_parameterLog ORDER BY ID DESC LIMIT 1";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 
-
 ?>
 
 <!DOCTYPE html>
@@ -51,6 +50,7 @@ $row = mysqli_fetch_assoc($result);
 					<li><a href="#monitor">MONITOR</a></li>
 					<li><a href="#contact">CONTACT</a></li>
 					<li><a href="control.php">CONTROL</a></li>
+					<li><a href="time.php">TIMER</a></li>
 					<li><a href="../view/reset_password.php">RESET-PASSWORD</a></li>
 					<li><a href="/session/logout_session.php">LOGOUT</a></li>
 				</ul>
@@ -63,8 +63,8 @@ $row = mysqli_fetch_assoc($result);
 		<meta http-equiv="refresh" content="60">
 		<h2 class="text-center">MONITOR</h2>
 		<div class="row text-center">
-			<div class="col-sm-6">
-				<h2 style="background-color: #fff; padding: 2em; color: #e74c3c">Temperator: <?php echo $row["temperature"]; $temp ?>&#8451;</h2>
+			<div class="col-sm-6" style="background-color: #fff; padding: 2em; color: #e74c3c">
+				<h2 style="color: #c0392b">Temperature</h2><h2 style="color: #e74c3c" id="temp"></h2>
 				<label class="switch">
 					<?=
 					$_SESSION['fan'] == 1 ?
@@ -76,8 +76,8 @@ $row = mysqli_fetch_assoc($result);
 					<h3 style="margin-top: 40px">FAN</h3>
 				</label>
 			</div>
-			<div class="col-sm-6">
-				<h2 style="background-color: #fff; padding: 2em; color: #3498db">Humidity: <?php echo $row["humidity"]; ?>%</h2>
+			<div class="col-sm-6" style="background-color: #fff; padding: 2em; color: #3498db">
+				<h2 style="color: #2980b9">Humidity</h2><h2 id="humi" style="color: #3498db"></h2>
 				<label class="switch">
 					<?=
 					$_SESSION['pump'] == 1 ?
@@ -89,6 +89,8 @@ $row = mysqli_fetch_assoc($result);
 					<h3 style="margin-top: 40px">PUMP</h3>
 				</label>
 			</div>
+		</div>
+		<div>
 		</div>
 	</div>
 
@@ -121,5 +123,13 @@ $row = mysqli_fetch_assoc($result);
 		</div>
 	</div>
 
+	<script type="text/javascript">
+		var x = setInterval(function refreshTH(){
+			var temp = "<?= $row['temperature'] ?>&#8451;";
+			var humi = "<?= $row['humidity'] ?>%";
+			document.getElementById('temp').innerHTML = temp;
+			document.getElementById('humi').innerHTML = humi;
+		}, 1000);
+	</script>
 </body>
 </html>
