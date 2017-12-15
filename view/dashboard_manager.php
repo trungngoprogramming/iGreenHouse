@@ -11,7 +11,6 @@ if (isset($_SESSION["username"])) {
 
 <?php
 
-
 $sql = "SELECT * FROM tb_parameterLog ORDER BY ID DESC LIMIT 1";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
@@ -60,7 +59,6 @@ $row = mysqli_fetch_assoc($result);
 
 	<!-- Container (Monitor Section) -->
 	<div id="monitor" class="container-fluid bg-grey">
-		<meta http-equiv="refresh" content="60">
 		<h2 class="text-center">MONITOR</h2>
 		<div class="row text-center">
 			<div class="col-sm-6" style="background-color: #fff; padding: 2em; color: #e74c3c">
@@ -124,12 +122,21 @@ $row = mysqli_fetch_assoc($result);
 	</div>
 
 	<script type="text/javascript">
-		var x = setInterval(function refreshTH(){
-			var temp = "<?= $row['temperature'] ?>&#8451;";
-			var humi = "<?= $row['humidity'] ?>%";
-			document.getElementById('temp').innerHTML = temp;
-			document.getElementById('humi').innerHTML = humi;
-		}, 1000);
+		$(document).ready(function() {
+			setInterval(function() {
+				$.get("api.php?act=getInfo",function(result) {
+					if(result.code==500) {
+						$("#temp").html("Error");
+
+						$("#humi").html("Error");
+					}else {
+						$("#temp").html(result.temperature + " &#8451");
+
+						$("#humi").html(result.humidity + " %");
+					}
+				},"json");
+			},500);
+		});
 	</script>
 </body>
 </html>

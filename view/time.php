@@ -60,6 +60,17 @@ if (isset($_SESSION['hide'])) {
 
 ?>
 
+<?php
+
+if (isset($_REQUEST['delete-log'])) {
+
+	$sql = "DELETE FROM tb_parameterLog";
+	$query = mysqli_query($conn, $sql);
+}
+
+
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,6 +84,8 @@ if (isset($_SESSION['hide'])) {
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/style/dashboard_manager.css">
 	<link rel="stylesheet" href="/style/toggle_button.css">
+	<link rel="stylesheet" href="/style/style.css">
+	<script type="text/javascript" src="ajax_pagination.php"></script>
 
 </head>
 <body onload="startTime()" id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
@@ -109,7 +122,7 @@ if (isset($_SESSION['hide'])) {
 				<form class="form-group" method="POST" action="time.php">
 					<p><input type="hidden" id="hide" name="hide"></p>
 					<p>
-						<input id="time" type="datetime-local" name="hours">	
+						<input id="time" type="datetime-local" name="hours">
 					</p>
 					<p>
 						<label style="margin-right: 14px">Fan</label>
@@ -131,7 +144,7 @@ if (isset($_SESSION['hide'])) {
 						'
 						?>
 					</p>
-					
+
 					<p>
 						<label>Pump</label>
 						<?= $_SESSION['pump'] == '1' ?
@@ -152,34 +165,39 @@ if (isset($_SESSION['hide'])) {
 						'
 						?>
 					</p>
-					
+
 					<button class="btn btn-success" style="margin-bottom: 5px" name="time_submit">OK</button>
 				</form>
 			</div>
 		</div>
 	</div>
-	
 
-	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="margin-left: 30px">
-		<table class="table table-success table-inverse">
-			<thead>
-				<tr>
-					<th>Temperature</th>
-					<th>Humidity</th>
-					<th>Time</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php while($query->fetch_array(MYSQLI_ASSOC)): ?>
-					<tr>
-						<td><?= $id = $row['temperature'] ?></td>
-						<td><?= $id = $row['humidity'] ?></td>
-						<td><?= $id = $row['time_stamp'] ?></td>
-					</tr>
-				<?php endwhile; ?>
-			</tbody>
-		</table>
+
+	<div class="container">
+		<?php
+		$per_page = 10;
+		$sql = "SELECT * FROM tb_parameterLog";
+		$query = mysqli_query($conn, $sql);
+		$count = mysqli_num_rows($query);
+		$pages = ceil($count/$per_page)
+		?>
+		<div id="content_container"></div>
+		<div class="pagination">
+			<ul id="paginate">
+				<?php
+				for($i=1; $i<=$pages; $i++)	{
+					echo '<li class="pagi" id="'.$i.'">'.$i.'</li>';
+				}
+				?>
+			</ul>
+		</div>
 	</div>
+
+
+<form action="time.php" method="post" accept-charset="utf-8">
+	<button class="btn btn-danger" name="delete-log">Delete log</button>
+</form>
+
 
 	<script>
 		function startTime() {
@@ -204,7 +222,7 @@ if (isset($_SESSION['hide'])) {
 		function checkTime(i) {
 		    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
 		    return i;
-		}
+		  }
 
 		// Set the date we're counting down to
 		var timer = "<?= $_SESSION['timer'] ?>";
@@ -229,7 +247,7 @@ if (isset($_SESSION['hide'])) {
 		  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
 		  + minutes + "m " + seconds + "s ";
 
-		  // If the count down is finished, write some text 
+		  // If the count down is finished, write some text
 		  if (distance < 0) {
 		  	clearInterval(x);
 		  	document.getElementById("demo").innerHTML = "Success!";
